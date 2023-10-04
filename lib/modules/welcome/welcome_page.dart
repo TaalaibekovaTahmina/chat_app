@@ -1,12 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:chat_app/modules/auth/auth_login.dart';
-import 'package:chat_app/modules/auth/auth_register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../components/battoms/custom_button.dart';
 import '../../components/logo/animation_logo.dart';
+import '../auth/auth_login.dart';
+import '../auth/auth_register.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -44,7 +42,6 @@ class _WelcomePageState extends State<WelcomePage> {
           ),
           const SizedBox(height: 20),
           CustomButton(
-            text: 'Login',
             onPressed: () {
               Navigator.push(
                 context,
@@ -53,11 +50,11 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               );
             },
-            backgroundColor: const Color(0xff61B1EA),
+            text: 'Login',
+            backgroundColor: const Color(0xff60B2EA),
           ),
           const SizedBox(height: 20),
           CustomButton(
-            text: 'Register',
             onPressed: () {
               Navigator.push(
                 context,
@@ -66,7 +63,8 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               );
             },
-            backgroundColor: const Color(0xff2171B6),
+            text: 'Register',
+            backgroundColor: const Color(0xff2671B6),
           ),
         ],
       ),

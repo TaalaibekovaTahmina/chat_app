@@ -1,10 +1,10 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class AnimationLogo extends StatefulWidget {
   const AnimationLogo({
-    Key? key,
+    super.key,
     required this.size,
-  }) : super(key: key);
+  });
 
   final double size;
 
@@ -43,7 +43,7 @@ class _AnimationLogoState extends State<AnimationLogo>
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: 'Logo',
+      tag: 'logo',
       child: SizedBox(
         height: controller.value * widget.size,
         child: Image.asset('assets/images/Vector.png'),

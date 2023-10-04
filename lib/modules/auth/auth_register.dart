@@ -1,9 +1,7 @@
-import 'package:chat_app/modules/home/home_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import '../../components/battoms/custom_button.dart';
+import '../../service/auth_service.dart';
 
 class AuthRegister extends StatefulWidget {
   const AuthRegister({Key? key}) : super(key: key);
@@ -13,29 +11,9 @@ class AuthRegister extends StatefulWidget {
 }
 
 class _AuthRegisterState extends State<AuthRegister> {
-  final ctlEmail = TextEditingController();
-  final ctlPasword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
-  Future<void> register({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  final ctlEmail = TextEditingController();
+  final ctlPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +38,7 @@ class _AuthRegisterState extends State<AuthRegister> {
               ),
               const SizedBox(height: 14),
               TextFormField(
-                controller: ctlPasword,
+                controller: ctlPassword,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter your password',
@@ -69,28 +47,23 @@ class _AuthRegisterState extends State<AuthRegister> {
               ),
               const SizedBox(height: 40),
               CustomButton(
-                text: 'Register',
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    if (ctlEmail.text.isNotEmpty && ctlEmail.text.isNotEmpty) {
-                      await register(
-                        email: ctlEmail.text,
-                        password: ctlEmail.text,
-                      );
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
+                    if (ctlEmail.text.isNotEmpty &&
+                        ctlPassword.text.isNotEmpty) {
+                      await authService.register(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        ),
+                        email: ctlEmail.text,
+                        password: ctlPassword.text,
                       );
                       FocusManager.instance.primaryFocus?.unfocus();
                     } else {
-                      print('ctlEmail or ctlPassword is empty');
+                      log('ctlEmail or ctlPassword is empty');
                     }
                   }
                 },
-                backgroundColor: const Color(0xff2171B6),
+                text: 'Register',
+                backgroundColor: const Color(0xff2671B6),
               ),
             ],
           ),
